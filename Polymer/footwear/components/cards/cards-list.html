@@ -1,0 +1,32 @@
+<link rel="import"  href="../styles/style-component.html">
+<link rel="import"  href="card-item.html">
+<dom-module id="cards-list">
+    <template>
+    <style include="style-component">
+    </style> 
+       
+    <div class="row row-pb-md">
+      <template is="dom-repeat" items="{{items}}">
+          <card-item basket-cb="{{cb}}"   class="col-lg-3 mb-4 text-center" item="{{item}}"></card-item>
+      </template>
+    </div>
+    </template>
+      <script>
+      class cardsList extends Polymer.Element {
+        static get is() { return "cards-list"; }
+        static get properties() {
+        return {
+          items: {
+            type: Array,
+            value: []
+          }
+        }
+      }
+      ready() {
+        super.ready();
+        console.log("this.items",this.items);
+      }
+      }
+      customElements.define(cardsList.is, cardsList);
+    </script>
+</dom-module>

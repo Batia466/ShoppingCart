@@ -1,0 +1,26 @@
+<link rel="import"  href="../styles/style-component.html">
+<dom-module id="header-main">
+    <template>
+    <style include="style-component">
+    </style> 
+        <div class="row">
+            <div class="col-sm-8 offset-sm-2 text-center colorlib-heading">
+              <h2>{{text}}</h2>
+            </div>
+        </div>
+    </template>
+      <script>
+      class headerMain extends Polymer.Element {
+        static get is() { return "header-main"; }
+        static get properties() {
+        return {
+          text: {
+            type: String,
+            value: "Best Sellers",
+          }
+        }
+      }
+      }
+      customElements.define(headerMain.is, headerMain);
+    </script>
+    </dom-module>

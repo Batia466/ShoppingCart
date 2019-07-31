@@ -1,0 +1,71 @@
+<link rel="import"  href="https://polygit.org/polymer+^v2.6.0/webcomponentsjs+^v1.3.0/components/polymer/polymer-element.html">
+<link rel="import"  href="https://polygit.org/polymer+^v2.6.0/webcomponentsjs+^v1.3.0/components/polymer/polymer.html">
+
+<link rel="import"  href="header/header-main.html">
+<link rel="import"  href="cards/cards-list.html">
+<link rel="import"  href="../services/api-mixin.html">
+
+<dom-module id="main-app">
+
+    <template>
+      <header-main></header-main>
+      <cards-list cb="{{basketCb}}" items="[[items]]"></cards-list>
+    </template>
+  
+    <script>
+      class mainApp extends ApiMixin(Polymer.Element) {
+        static get is() { return "main-app"; }
+        static get properties() {
+        return {
+          items: {
+            type: Array,
+            value: [
+   
+            ]
+          },
+          basketArr: {
+            type: Array,
+            value: []
+          },
+          basketCb: {
+            type: Object,
+            value: {
+              cb: (item)=> {
+                if (this.basketArr && this.basketArr.length > 0) {
+                  if (this.basketArr.findIndex((obj) => { return obj.key === item.key }) < 0) {
+                    item.inBasket = true;
+                    this.basketArr.push(item)
+                  }
+                }
+                else {
+                  if(!this.basketArr) {
+                    this.basketArr=[];
+                  }
+                  item.inBasket = true;
+                  this.basketArr.push(item)
+                }
+
+                console.log("this.basketArr",this.basketArr)
+              }
+            }
+           
+          }
+        }
+      }
+
+      ready() {
+        super.ready();
+      
+        this.getItems().then((res) => {
+          console.log("ApiMixin res",res);
+          this.set("items",res);
+        }).catch((er)=> {
+          console.log("NO DATA",er);
+        });
+        
+      }
+      }
+      customElements.define(mainApp.is, mainApp);
+    </script>
+  
+  </dom-module>

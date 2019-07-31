@@ -1,0 +1,48 @@
+<link rel="import"  href="../styles/style-component.html">
+<dom-module id="card-item">
+    <template>
+    <style include="style-component">
+    
+    </style> 
+        <div>
+            <div class="product-entry border">
+                <a href="#" class="prod-img">
+                    <img src="{{item.photo}}" class="img-fluid" alt="Free html5 bootstrap 4 template">
+                </a>
+                <div class="desc">
+                    <h2><a href="#">{{item.name}}</a></h2>
+                    <span class="price">{{item.price}}</span>
+                </div>
+                <template is="dom-if" if="{{!item.isInBasket}}">
+                    <button type="button" on-click="clickBuyBtn" class="btn btn-info">Buy</button>
+                </template>
+                <template is="dom-if" if="{{item.isInBasket}}">
+                    <button type="button" on-click="clicktoCartBtn" class="btn btn-info">Go to basket</button>
+                </template>    
+                </div>
+        </div>
+
+    </template>
+      <script>
+      class cardItem extends Polymer.Element {
+        static get is() { return "card-item"; }
+        static get properties() {
+        return {
+          item: {
+            type: Object,
+            value: {}
+          }
+        }
+      }
+      clickBuyBtn() {
+          this.set("item.isInBasket",!this.item.isInBasket);
+          if(this.basketCb && this.basketCb.cb) {
+            this.basketCb.cb(this.item)
+          }
+         
+
+      }
+      }
+      customElements.define(cardItem.is, cardItem);
+    </script>
+</dom-module>
